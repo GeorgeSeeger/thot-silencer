@@ -28,4 +28,5 @@ function emptyList() {
   chrome.storage.sync.remove('theList', function(){
     console.log('Emptied the list');
   });
+  newList([]);
 }
