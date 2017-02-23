@@ -8,6 +8,7 @@ function updateList() {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+    console.log('received message');
     if( request.message === "update" ) {
       console.log('Updating list')
       updateList();

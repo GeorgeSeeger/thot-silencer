@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Thot Silencer",
-  "version": "0.9",
+  "version": "1.0",
   "content_scripts": [
     {
       "matches": [

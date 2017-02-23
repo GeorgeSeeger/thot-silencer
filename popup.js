@@ -1,10 +1,12 @@
-var theList;
+var theList = [];
 
 window.addEventListener('load', function() {
     updateList();
     displayList();
 
-    document.getElementById('addusername').addEventListener('submit', addUserName);
+    document.getElementById('addusername').addEventListener('submit', function(){ event.preventDefault();});
+
+    document.getElementById('save').addEventListener('click', addUserName);
 
     document.getElementById('display').addEventListener('click', displayList);
 
@@ -15,25 +17,28 @@ window.addEventListener('load', function() {
 
 function addUserName(boolean = true) {
   event.preventDefault();
-  chrome.storage.sync.get('theList', function(list){
-    var element = document.getElementById('username');
-    var username = encodeURIComponent(element.value);
-    element.value = '';
-    var theNewList = list['theList']
-    if (boolean){ //add
-      theNewList.push(username);
-    } else { //remove
-      theNewList.splice(theNewList.indexOf(username), 1);
-    }
-    newList(theNewList);
+  if (document.getElementById('username').value !== ''){
+    chrome.storage.sync.get('theList', function(list){
+      var element = document.getElementById('username');
+      var username = encodeURIComponent(element.value);
+      element.value = '';
+      var theNewList = list['theList']
+      if (boolean){ //add
+        theNewList.push(username);
+      } else { //remove
+        theNewList.splice(theNewList.indexOf(username), 1);
+      }
+      newList(theNewList);
 
-    //send message to content.js to update theList
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      var activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, {"message": "update"});
+      //send message to content.js to update theList
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var activeTab = tabs[0];
+        console.log('sending message to content.js');
+        chrome.tabs.sendMessage(activeTab.id, {"message": "update"});
+      });
+      displayList();
     });
-    displayList();
-  });
+  }
 }
 
 function removeUserName() {
