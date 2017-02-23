@@ -5,10 +5,18 @@ window.addEventListener('load', function() {
 function addUserName() {
   event.preventDefault();
   chrome.storage.sync.get('theList', function(list){
-    var username = encodeURIComponent(document.getElementById('username').value);
+    var element = document.getElementById('username');
+    var username = encodeURIComponent(element.value);
+    element.value = '';
     var theNewList = list['theList']
     theNewList.push(username);
     newList(theNewList);
+
+    //send message to content.js to update theList
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      var activeTab = tabs[0];
+      chrome.tabs.sendMessage(activeTab.id, {"message": "update"});
+    });
   });
 }
 
