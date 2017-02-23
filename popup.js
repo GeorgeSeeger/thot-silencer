@@ -33,7 +33,6 @@ function addUserName(boolean = true) {
       //send message to content.js to update theList
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var activeTab = tabs[0];
-        console.log('sending message to content.js');
         chrome.tabs.sendMessage(activeTab.id, {"message": "update"});
       });
       displayList();
@@ -47,19 +46,17 @@ function removeUserName() {
 
 function printList() {
   chrome.storage.sync.get('theList', function(list){
-    console.log(list);
+    console.log(list['theList']);
   });
 }
 
 function newList(array) {
   chrome.storage.sync.set({'theList': array}, function(){
-    console.log('Saved ' + array[array.length - 1]);
   });
 }
 
 function emptyList() {
   chrome.storage.sync.remove('theList', function(){
-    console.log('Emptied the list');
   });
   newList([]);
 }
