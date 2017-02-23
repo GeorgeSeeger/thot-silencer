@@ -22,7 +22,7 @@ function addUserName(boolean = true) {
       var element = document.getElementById('username');
       var username = encodeURIComponent(element.value);
       element.value = '';
-      var theNewList = list['theList']
+      var theNewList = list['theList'] || [];
       if (boolean){ //add
         theNewList.push(username);
       } else { //remove
