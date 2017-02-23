@@ -1,17 +1,30 @@
 var theList;
 
 window.addEventListener('load', function() {
+    updateList();
+    displayList();
+
     document.getElementById('addusername').addEventListener('submit', addUserName);
+
+    document.getElementById('display').addEventListener('click', displayList);
+
+    document.getElementById('remove').addEventListener('click', removeUserName);
+
+    document.getElementById('remove-all').addEventListener('click', emptyList);
 });
 
-function addUserName() {
+function addUserName(boolean = true) {
   event.preventDefault();
   chrome.storage.sync.get('theList', function(list){
     var element = document.getElementById('username');
     var username = encodeURIComponent(element.value);
     element.value = '';
     var theNewList = list['theList']
-    theNewList.push(username);
+    if (boolean){ //add
+      theNewList.push(username);
+    } else { //remove
+      theNewList.splice(theNewList.indexOf(username), 1);
+    }
     newList(theNewList);
 
     //send message to content.js to update theList
@@ -19,7 +32,12 @@ function addUserName() {
       var activeTab = tabs[0];
       chrome.tabs.sendMessage(activeTab.id, {"message": "update"});
     });
+    displayList();
   });
+}
+
+function removeUserName() {
+  addUserName(false);
 }
 
 function printList() {
@@ -47,10 +65,11 @@ function updateList() {
   })
 }
 
-function displayList(array) {
+function displayList() {
   updateList();
   var holder = document.getElementById('username-list');
-  for (var i = 0; i < array.length; i++){
-    holder.innerHTML += "<div class='list'>  " + array[i] + "</div>";
+  holder.innerHTML = '';
+  for (var i = 0; i < theList.length; i++){
+    holder.innerHTML += "<div class='list'>\t" + theList[i] + "</div>";
   }
 }

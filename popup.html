@@ -3,7 +3,7 @@
     <head>
         <style>
             body {
-                min-width: 300px;
+                min-width: 420px;
                 overflow-x: hidden;
                 font-family: Arial, sans-serif;
                 font-size: 12px;
@@ -11,8 +11,10 @@
             input, textarea {
                 width: 420px;
             }
-            input#save {
-                font-weight: bold; width: auto;
+            input#save, button {
+                font-weight: bold;
+                width: auto;
+                height: 19px;
             }
         </style>
         <script src="popup.js"></script>
@@ -27,6 +29,9 @@
             <input type="text" id="username" name="username" size="50" value="" /></p>
             <p>
                 <input id="save" type="submit" value="Save Thot ID" />
+                <button id="display">Update Display</button>
+                <button id="remove">Remove Thot ID</button>
+                <button id="remove-all">Remove All</button>
                 <span id="status-display"></span>
             </p>
         </form>
