@@ -3,7 +3,7 @@
     <head>
         <style>
             body {
-                min-width: 420px;
+                min-width: 300px;
                 overflow-x: hidden;
                 font-family: Arial, sans-serif;
                 font-size: 12px;
@@ -18,8 +18,12 @@
         <script src="popup.js"></script>
     </head>
     <body>
+        <span>Thots silenced:</span>
+        <div id="username-list">
+          None yet!
+        </div>
         <form id="addusername">
-            <p><label for="username">Username</label><br />
+            <p><label for="username">Enter Username</label><br />
             <input type="text" id="username" name="username" size="50" value="" /></p>
             <p>
                 <input id="save" type="submit" value="Save Thot ID" />

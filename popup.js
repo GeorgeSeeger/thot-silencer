@@ -1,3 +1,5 @@
+var theList;
+
 window.addEventListener('load', function() {
     document.getElementById('addusername').addEventListener('submit', addUserName);
 });
@@ -37,4 +39,18 @@ function emptyList() {
     console.log('Emptied the list');
   });
   newList([]);
+}
+
+function updateList() {
+  chrome.storage.sync.get('theList', function(obj){
+    theList = obj['theList'];
+  })
+}
+
+function displayList(array) {
+  updateList();
+  var holder = document.getElementById('username-list');
+  for (var i = 0; i < array.length; i++){
+    holder.innerHTML += "<div class='list'>  " + array[i] + "</div>";
+  }
 }
